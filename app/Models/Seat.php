@@ -10,6 +10,7 @@ class Seat extends Model
     use HasFactory;
 
     protected $dates = ['reserved'];
+    protected $guarded = [];
 
     public function session(){
         return $this->belongsTo('App/Models/Session');

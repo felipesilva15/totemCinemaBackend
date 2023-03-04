@@ -16,7 +16,7 @@ return new class extends Migration
             $table->float('price', 6, 2);
             $table->foreignId('seat_id')->constrained();
             $table->foreignId('order_id')->constrained();
-            $table->foreignId('type_id')->constrained();
+            $table->foreignId('ticket_type_id')->constrained();
             $table->timestamps();
         });
     }

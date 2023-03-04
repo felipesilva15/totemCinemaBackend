@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $dates = ['date'];
+    protected $guarded = [];
 
     public function ticket(){
         return $this->hasMany('App/Models/Ticket');

@@ -9,6 +9,8 @@ class TicketType extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function ticket(){
         return $this->hasMany('App/Models/Ticket');
     }

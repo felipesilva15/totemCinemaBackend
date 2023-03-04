@@ -33,7 +33,7 @@ class FilmController extends Controller
 
         return response()->json([
             'status'=>200,
-            'message'=>'Filme de ID {$request->id} alterado!'
+            'message'=>"Filme de ID {$request->id} alterado!"
         ]);
     }
 
@@ -42,7 +42,7 @@ class FilmController extends Controller
 
         return response()->json([
             'status'=>200,
-            'message'=>"Filme de ID $id deletado!"
+            'message'=>"Filme de ID {$id} deletado!"
         ]);
     }
 }

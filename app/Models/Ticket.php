@@ -9,6 +9,8 @@ class Ticket extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function seat(){
         return $this->belongsTo('App/Models/Seat');
     }

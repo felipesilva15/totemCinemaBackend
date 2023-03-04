@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Session;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -17,16 +18,37 @@ class SessionController extends Controller
         'Sábado'
     ];
 
-    public function index(){
-        $data = Session::all();
+    private $months = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+    ];
 
-        return response()->json($data);
+    public function index(){
+        $sessions = Session::all();
+
+        return response()->json($sessions);
     }
 
     public function store(Request $request){
         $session = new Session();
 
-        $session = $request->all();
+        $session->date = $request->date;
+        $session->film_id = $request->film_id;
+        $session->hour = $request->hour;
+        $session->language = $request->language;
+        $session->room = $request->room;
+
+        $session->save();
 
         return response()->json([
             'status'=>200,
@@ -39,7 +61,7 @@ class SessionController extends Controller
 
         return response()->json([
             'status'=>200,
-            'message'=>'Sessão de ID {$request->id} alterada!'
+            'message'=>"Sessão de ID {$request->id} alterada!"
         ]);
     }
 
@@ -48,26 +70,27 @@ class SessionController extends Controller
 
         return response()->json([
             'status'=>200,
-            'message'=>'Sessão de ID {$id} deletada!'
+            'message'=>"Sessão de ID {$id} deletada!"
         ]);
     }
 
     public function findNextDays($count){
-        $count = $count && $count != 0 ? 7 : $count;
+        $count = $count && $count != 0 ? intval($count) : 7;
 
-        $dataSql = Session::pluck('date', )
-                            ->where('date', '>=', 'GETDATE()')
-                            ->groupBy('date')
-                            ->limit($count)
-                            ->orderBy('date')
-                            ->get();
+        $dataSql = Session::orderBy('date')->where('date', '>=', date('Y-m-d'))
+            ->get()
+            ->unique('date')
+            ->pluck('date')
+            ->take($count);
 
         $data = [];
 
         foreach ($dataSql as $date) {
-            $item['date'] = $date['date'];
-            $item['dayOfWeek'] = $this->dow[date('w', strtotime($date['date']))];
+            $item['date'] = $date;
+            $item['month'] = $this->months[date('n', strtotime($date))];
+            $item['dayOfWeek'] = $this->dow[date('w', strtotime($date))];
 
+            array_push($data, $item);
         }
 
         return response()->json($data);
