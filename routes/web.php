@@ -16,5 +16,8 @@ use App\Http\Controllers\FilmController;
 |
 */
 
+// Films
 Route::get('/films', [FilmController::class, 'index']);
 Route::post('/films', [FilmController::class, 'store']);
+Route::put('/films/{$id}', [FilmController::class, 'update']);
+Route::delete('/films/{$id}', [FilmController::class, 'destroy']);

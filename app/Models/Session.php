@@ -15,4 +15,8 @@ class Session extends Model
     public function film(){
         return $this->belongsTo('App/Models/Film');
     }
+
+    public function seat(){
+        return $this->hasMany('App/Models/Seat');
+    }
 }

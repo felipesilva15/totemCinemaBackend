@@ -27,4 +27,22 @@ class FilmController extends Controller
             'message'=>'Filme criado com sucesso!'
         ]);
     }
+
+    public function update(Request $request){
+        Film::FindOrFail($request->id)->update($request->all());
+
+        return response()->json([
+            'status'=>200,
+            'message'=>'Filme de ID {$request->id} alterado!'
+        ]);
+    }
+
+    public function destroy($id){
+        Film::findOrFail($id)->delete();
+
+        return response()->json([
+            'status'=>200,
+            'message'=>"Filme de ID $id deletado!"
+        ]);
+    }
 }
