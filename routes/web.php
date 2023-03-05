@@ -9,6 +9,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TicketTypeController;
 use App\Http\Controllers\SeatController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,9 @@ Route::get('/seats', [SeatController::class, 'index']);
 Route::post('/seats', [SeatController::class, 'store']);
 Route::put('/seats/{id}', [SeatController::class, 'update']);
 Route::delete('/seats/{id}', [SeatController::class, 'destroy']);
+
+// Tickets
+Route::get('/tickets', [TicketController::class, 'index']);
+Route::post('/tickets', [TicketController::class, 'store']);
+Route::put('/tickets/{id}', [TicketController::class, 'update']);
+Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
